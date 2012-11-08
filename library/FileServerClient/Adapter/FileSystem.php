@@ -60,7 +60,6 @@ class FileSystem implements AdapterInterface {
 		if (false !== ($pos = strpos($name, "\n"))) {
 			$name = substr($name, 0, $pos);
 		}
-		$name = str_replace("\n", '', $name);
 
 		if (DIRECTORY_SEPARATOR != '/') {
 			$name = str_replace('/', DIRECTORY_SEPARATOR, $name);
