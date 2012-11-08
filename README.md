@@ -33,6 +33,13 @@ Adapters
 Every concreate file server must have it's own adapter. Adapter implements all interface methods.
 
 Usage examples
-==============
+--------------
 
 Usage example can be found in test files: https://github.com/feedbee/file-server-client/tree/master/test/
+
+Liciense
+--------
+
+BSD License: http://www.opensource.org/licenses/bsd-license.php  
+
+Copyright (c) 2012, Leontyev Valera <feedbee at gmail dot com>.
