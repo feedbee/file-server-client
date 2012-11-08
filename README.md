@@ -4,7 +4,7 @@ file-server-client
 Single simple facade for different types of file servers.
 
 Single interface
-===
+----------------
 ```php
 interface AdapterInterface {
   public function __construct(array $options = array());
@@ -28,7 +28,7 @@ interface AdapterInterface {
 ```
 
 Adapters
-========
+--------
 
 Every concreate file server must have it's own adapter. Adapter implements all interface methods.
 
