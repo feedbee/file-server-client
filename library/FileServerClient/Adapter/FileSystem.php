@@ -91,7 +91,7 @@ class FileSystem implements AdapterInterface {
 			throw new FileNotExistsException($targetName);
 		}
 
-		return fopen($this->basePath . $targetName);
+		return fopen($this->basePath . $targetName, 'r');
 	}
 
 	public function put($source, $targetName, $override = false) {
@@ -117,7 +117,7 @@ class FileSystem implements AdapterInterface {
 
 		$this->createSubdirectories($targetName);
 
-		$toStream = fopen($this->basePath . $targetName);
+		$toStream = fopen($this->basePath . $targetName, 'w');
 		if (!$toStream) {
 			throw new \RuntimeException(__METHOD__ . "can't open target file `{$this->basePath}{$targetName}`");
 		}

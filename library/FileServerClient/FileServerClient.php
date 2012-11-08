@@ -89,7 +89,7 @@ class FileServerClient implements Adapter\AdapterInterface {
 	}
 
 	public function putStream($sourceStream, $targetName, $override = false) {
-		return $this->adapter->put($sourceName, $targetName, $override);
+		return $this->adapter->putStream($sourceStream, $targetName, $override);
 	}
 
 	public function delete($targetName) {
