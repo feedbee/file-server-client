@@ -91,7 +91,12 @@ class FileSystem implements AdapterInterface {
 			throw new FileNotExistsException($targetName);
 		}
 
-		return fopen($this->basePath . $targetName, 'r');
+		$stream = fopen($this->basePath . $targetName, 'r');
+		if (!$stream) {
+			throw new \RuntimeException(__METHOD__ . ": can't open stream to file `$targetName`");
+		}
+
+		return $stream;
 	}
 
 	public function put($source, $targetName, $override = false) {
