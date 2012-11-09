@@ -65,10 +65,10 @@ class FileServerClient implements Adapter\AdapterInterface {
 				$this->adapter = new $className($adapterOptions);
 			}
 			else {
-				throw new \Exceptoin(__METHOD__ . ': can\'t understand `adapter` option');
+				throw new \Exception(__METHOD__ . ': can\'t understand `adapter` option');
 			}
 		} else {
-			throw new \Exceptoin(__METHOD__ . ': `adapter` option is not set while required');
+			throw new \Exception(__METHOD__ . ': `adapter` option is not set while required');
 		}
 	}
 
