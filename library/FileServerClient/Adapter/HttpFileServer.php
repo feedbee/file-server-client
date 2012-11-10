@@ -44,7 +44,6 @@ namespace FileServerClient\Adapter;
 
 use FileServerClient\Exception\FileExistsException,
 	FileServerClient\Exception\FileNotExistsException,
-	FileServerClient\Exception\WrongTargetNameException,
 	FileServerClient\Exception\NotImplementedException;
 
 /**
@@ -108,7 +107,7 @@ class HttpFileServer implements AdapterInterface {
 
 		$stream = fopen($this->baseUri . $targetName, 'r');
 		if (!$stream) {
-			throw new \RuntimeException(__METHOD__ . ": can't open stream to file `{$this->basePath}$targetName`");
+			throw new \RuntimeException(__METHOD__ . ": can't open stream to file `{$this->baseUri}$targetName`");
 		}
 		return $stream;
 	}
