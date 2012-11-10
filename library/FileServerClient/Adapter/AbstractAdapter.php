@@ -42,26 +42,39 @@
 
 namespace FileServerClient\Adapter;
 
-interface AdapterInterface {
-	public function __construct(array $options = array());
+abstract class AbstractAdapter implements AdapterInterface {
+	public function getFile($targetName, $fileName = null) {
+		if (is_null($fileName)) {
+			$fileName = tempnam(sys_get_temp_dir(), 'fsc');
+		}
 
-	public function has($targetName);
+		$fileStream = fopen($fileName, 'w');
+		if (!$fileStream) {
+			throw new \RuntimeException(__METHOD__ . ": can't open file `$fileName` for writing");
+		}
+		$stream = $this->getStream($targetName);
+		$result = stream_copy_to_stream($stream, $fileStream);
 
-	public function get($targetName);
+		fclose($fileStream);
+		fclose($stream);
 
-	public function getFile($targetName, $fileName = null);
+		if (false === $result) {
+			throw new \RuntimeException(__METHOD__ . ": can't copy remote stream to local file `$fileName`");
+		}
 
-	public function getStream($targetName);
+		return $fileName;
+	}
 
-	public function put($source, $targetName, $override = false);
+	public function putFile($fileName, $targetName, $override = false) {
+		$fileStream = fopen($fileName, 'r');
+		if (!$fileStream) {
+			throw new \RuntimeException(__METHOD__ . ": can't open file `$fileName` for reading");
+		}
 
-	public function putFile($fileName, $targetName, $override = false);
+		$result = $this->putStream($fileStream, $targetName, $override);
 
-	public function putStream($sourceStream, $targetName, $override = false);
+		fclose($fileStream);
 
-	public function delete($targetName);
-
-	public function rename($fromName, $toName);
-
-	public function copy($sourceName, $targetName);
+		return $result;
+	}
 }

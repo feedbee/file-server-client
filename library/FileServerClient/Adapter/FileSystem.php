@@ -46,7 +46,7 @@ use FileServerClient\Exception\FileExistsException,
 	FileServerClient\Exception\FileNotExistsException,
 	FileServerClient\Exception\WrongTargetNameException;
 
-class FileSystem implements AdapterInterface {
+class FileSystem extends AbstractAdapter {
 	private $basePath;
 
 	public function __construct(array $options = array()) {

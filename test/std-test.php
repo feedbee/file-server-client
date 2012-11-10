@@ -41,6 +41,15 @@ try {
 	print "GetStream: not implemented" . PHP_EOL;
 }
 
+// getFile
+try {
+	$fileName = $client->getFile('/a');
+	print "GetFile: " . (file_get_contents($fileName) == 'Test2' ? 'Ok' : 'Fail') . PHP_EOL;
+	unlink($fileName);
+} catch (FileServerClient\Exception\NotImplementedException $e) {
+	print "GetFile: not implemented" . PHP_EOL;
+}
+
 // rename
 try {
 	$client->rename('/a', '/b/a');
@@ -77,17 +86,23 @@ try {
 	print "PutStream: not implemented" . PHP_EOL;
 }
 
+fclose($temp);
+
 // put stream (override)
+$temp = tmpfile();
+fwrite($temp, "Test4");
+fseek($temp, 0);
+
 try {
 	try {
-		$client->put('Test4', '/stream');
+		$client->putStream($temp, '/stream');
 		print "FileExistsException (Stream): Fail" . PHP_EOL;
 	}
 	catch (FileServerClient\Exception\FileExistsException $e)
 	{
 		print "FileExistsException (Stream): Ok" . PHP_EOL;
 	}
-	$client->put('Test4', '/stream', true);
+	$client->putStream($temp, '/stream', true);
 	print "PutStream (override): " . ($client->get('/stream') == 'Test4' ? 'Ok' : 'Fail') . PHP_EOL;
 } catch (FileServerClient\Exception\NotImplementedException $e) {
 	print "PutStream: not implemented" . PHP_EOL;
@@ -95,7 +110,38 @@ try {
 
 try {
 	$client->delete('/stream');
-} catch (FileServerClient\Exception\NotImplementedException $e) {
-	print "PutStream (override): not implemented" . PHP_EOL;
-}
+} catch (FileServerClient\Exception\NotImplementedException $e) {}
 fclose($temp); // this removes the file
+
+// put file
+$fileName = tempnam(sys_get_temp_dir(), 'fsc');
+file_put_contents($fileName, 'Test5');
+
+try {
+	$client->putFile($fileName, '/put-file');
+	print "PutFile: " . ($client->get('/put-file') == 'Test5' ? 'Ok' : 'Fail') . PHP_EOL;
+} catch (FileServerClient\Exception\NotImplementedException $e) {
+	print "PutFile: not implemented" . PHP_EOL;
+}
+
+// put file (override)
+file_put_contents($fileName, 'Test6');
+try {
+	try {
+		$client->putFile($fileName, '/put-file');
+		print "FileExistsException (File): Fail" . PHP_EOL;
+	}
+	catch (FileServerClient\Exception\FileExistsException $e)
+	{
+		print "FileExistsException (File): Ok" . PHP_EOL;
+	}
+	$client->putFile($fileName, '/put-file', true);
+	print "PutFile (override): " . ($client->get('/put-file') == 'Test6' ? 'Ok' : 'Fail') . PHP_EOL;
+} catch (FileServerClient\Exception\NotImplementedException $e) {
+	print "PutFile: not implemented" . PHP_EOL;
+}
+
+try {
+	$client->delete('/put-file');
+} catch (FileServerClient\Exception\NotImplementedException $e) {}
+unlink($fileName);

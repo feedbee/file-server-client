@@ -80,12 +80,20 @@ class FileServerClient implements Adapter\AdapterInterface {
 		return $this->adapter->get($targetName);
 	}
 
+	public function getFile($targetName, $fileName = null) {
+		return $this->adapter->getFile($targetName, $fileName = null);
+	}
+
 	public function getStream($targetName) {
 		return $this->adapter->getStream($targetName);
 	}
 
 	public function put($sourceName, $targetName, $override = false) {
 		return $this->adapter->put($sourceName, $targetName, $override);
+	}
+
+	public function putFile($fileName, $targetName, $override = false) {
+		return $this->adapter->putFile($fileName, $targetName, $override);
 	}
 
 	public function putStream($sourceStream, $targetName, $override = false) {

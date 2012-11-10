@@ -49,7 +49,7 @@ use FileServerClient\Exception\FileExistsException,
 /**
  * Client adapter for Http File Server https://github.com/feedbee/http-file-server
  */
-class HttpFileServer implements AdapterInterface {
+class HttpFileServer extends AbstractAdapter {
 	private $baseUri;
 	private $requestsTimeout = 1; // seconds
 
