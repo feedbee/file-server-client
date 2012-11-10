@@ -194,6 +194,7 @@ class HttpFileServer implements AdapterInterface {
 			case 'DELETE': curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE'); break;
 		}
 
+		$fileHandler = null;
 		if (!is_null($sendFile)) {
 			$fileSize = filesize($sendFile);
 			$fileHandler = fopen($sendFile, 'r');
@@ -214,7 +215,7 @@ class HttpFileServer implements AdapterInterface {
 		// curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
 
 		$response = curl_exec($ch);
-		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 		if (!is_null($sendFile)) {
 			fclose($fileHandler);
@@ -227,6 +228,6 @@ class HttpFileServer implements AdapterInterface {
 		}
 		curl_close($ch);
 		
-		return array('code' => $httpcode, 'body' => $response);
+		return array('code' => $httpCode, 'body' => $response);
 	}
 }
