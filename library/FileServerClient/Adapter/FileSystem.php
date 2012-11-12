@@ -186,7 +186,12 @@ class FileSystem extends AbstractAdapter {
 		$toName = $this->prepareName($toName);
 
 		$this->createSubdirectories($toName);
-		rename($this->basePath . $fromName, $this->basePath . $toName);
+		$result = rename($this->basePath . $fromName, $this->basePath . $toName);
+
+		if (!$result) {
+			throw new \RuntimeException(__METHOD__ . "can't rename file `{$this->basePath . $fromName}` to `{$this->basePath . $toName}`");
+		}
+
 		$this->removeSubdirectories($fromName);
 	}
 
