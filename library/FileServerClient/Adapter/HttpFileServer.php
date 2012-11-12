@@ -150,7 +150,10 @@ class HttpFileServer extends AbstractAdapter {
 		}
 		fclose($temp);
 
-		$this->sendRequest('PUT', $targetName, $tempFileName);
+		$result = $this->sendRequest('PUT', $targetName, $tempFileName);
+		if ($result['code'] / 100 != 2) {
+			throw new \RuntimeException(__METHOD__ . ": can't put file `$targetName`, code {$result['code']}");
+		}
 
 		unlink($tempFileName);
 
