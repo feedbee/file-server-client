@@ -80,7 +80,7 @@ class HttpFileServer extends AbstractAdapter {
 		// throw new NotImplementedException('Method `has` is not implemented in Http File Server');
 		$result = $this->sendRequest('HEAD', $targetName);
 
-		return $result['code'] / 100 == 2;
+		return round($result['code'] / 100) == 2;
 	}
 
 	public function get($targetName) {
@@ -88,7 +88,7 @@ class HttpFileServer extends AbstractAdapter {
 
 		$result = $this->sendRequest('GET', $targetName);
 
-		if ($result['code'] / 100 != 2) {
+		if (round($result['code'] / 100) != 2) {
 			if ($result['code'] == 404) {
 				throw new FileNotExistsException($targetName);
 			}
@@ -151,7 +151,7 @@ class HttpFileServer extends AbstractAdapter {
 		fclose($temp);
 
 		$result = $this->sendRequest('PUT', $targetName, $tempFileName);
-		if ($result['code'] / 100 != 2) {
+		if (round($result['code'] / 100) != 2) {
 			throw new \RuntimeException(__METHOD__ . ": can't put file `$targetName`, code {$result['code']}");
 		}
 
@@ -164,7 +164,7 @@ class HttpFileServer extends AbstractAdapter {
 		$targetName = $this->prepareName($targetName);
 
 		$result = $this->sendRequest('DELETE', $targetName);
-		if ($result['code'] / 100 != 2) {
+		if (round($result['code'] / 100) != 2) {
 			throw new \RuntimeException(__METHOD__ . ": can't delete file `$targetName`, code {$result['code']}");
 		}
 
