@@ -2,20 +2,25 @@ file-server-client
 ==================
 
 Single simple facade for different types of file servers.
+The library represents interface to perform basic file operations: CRUD, rename, copy, aviability check.
 
 Single interface
 ----------------
 ```php
 interface AdapterInterface {
-  public function __construct(array $options = array());
+	public function __construct(array $options = array());
 
 	public function has($targetName);
 
 	public function get($targetName);
 
+	public function getFile($targetName, $fileName = null);
+
 	public function getStream($targetName);
 
 	public function put($source, $targetName, $override = false);
+
+	public function putFile($fileName, $targetName, $override = false);
 
 	public function putStream($sourceStream, $targetName, $override = false);
 
@@ -31,6 +36,8 @@ Adapters
 --------
 
 Every concrete file server must have it's own adapter. Adapter implements all interface methods.
+
+Currently two adapters are bundled with source code: FileSystem and HttpFileServer.
 
 Usage examples
 --------------
