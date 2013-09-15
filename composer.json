@@ -1,0 +1,16 @@
+{
+    "name": "feedbee/file-server-client",
+    "description": "Single simple facade for different types of file servers. The library represents interface to perform basic file operations: CRUD, rename, copy, aviability check.",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Valera Leontyev",
+            "email": "feedbee@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "FileServerClient\\": "library/"
+        }
+    }
+}
