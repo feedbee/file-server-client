@@ -88,8 +88,8 @@ class FileServerClient implements Adapter\AdapterInterface {
 		return $this->adapter->getStream($targetName);
 	}
 
-	public function put($sourceName, $targetName, $override = false) {
-		return $this->adapter->put($sourceName, $targetName, $override);
+	public function put($source, $targetName, $override = false) {
+		return $this->adapter->put($source, $targetName, $override);
 	}
 
 	public function putFile($fileName, $targetName, $override = false) {
