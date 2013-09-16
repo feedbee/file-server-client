@@ -105,7 +105,8 @@ class HttpFileServer extends AbstractAdapter {
 			throw new FileNotExistsException($targetName);
 		}
 
-		$stream = fopen($this->baseUri . $targetName, 'r');
+		$uri = $this->getResourceUri($targetName);
+		$stream = fopen($uri, 'r');
 		if (!$stream) {
 			throw new \RuntimeException(__METHOD__ . ": can't open stream to file `{$this->baseUri}$targetName`");
 		}
@@ -183,9 +184,8 @@ class HttpFileServer extends AbstractAdapter {
 		$method = strtoupper($method);
 
 		$ch = curl_init();
-		$encodedTargetName = urlencode($targetName);
-		$url = "{$this->baseUri}?url=$encodedTargetName";
-		
+		$url = $this->getResourceUri($targetName);
+
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_TIMEOUT, $this->requestsTimeout);
@@ -232,5 +232,10 @@ class HttpFileServer extends AbstractAdapter {
 		curl_close($ch);
 		
 		return array('code' => $httpCode, 'body' => $response);
+	}
+
+	public function getResourceUri($targetName) {
+		$encodedTargetName = urlencode($targetName);
+		return "{$this->baseUri}?url=$encodedTargetName";
 	}
 }
