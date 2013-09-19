@@ -108,7 +108,7 @@ class HttpFileServer extends AbstractAdapter {
 		$uri = $this->getResourceUri($targetName);
 		$stream = fopen($uri, 'r');
 		if (!$stream) {
-			throw new \RuntimeException(__METHOD__ . ": can't open stream to file `{$this->baseUri}$targetName`");
+			throw new \RuntimeException(__METHOD__ . ": can't open stream to file `$uri`");
 		}
 		return $stream;
 	}
