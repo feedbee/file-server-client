@@ -77,7 +77,6 @@ class HttpFileServer extends AbstractAdapter {
 	}
 
 	public function has($targetName) {
-		// throw new NotImplementedException('Method `has` is not implemented in Http File Server');
 		$result = $this->sendRequest('HEAD', $targetName);
 
 		return round($result['code'] / 100) == 2;
